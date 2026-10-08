@@ -2,7 +2,9 @@
 
 Runnable Java examples for Autonomous AI Database with OCI IAM and Microsoft Entra ID: OCI/Entra token files, OCI SDK proof-of-possession tokens, Entra SDK bearer tokens, JDBC resource providers, and a concurrent Universal Connection Pool (UCP). No database password is passed by the demo. Each successful connection executes a read-only identity query; no application tables are required.
 
-Companion article: [Passwordless Java connections with OCI IAM and Microsoft Entra ID](https://paulparkinson.github.io/oracle-ai-for-sustainable-dev/security/java-jdbc-token-authentication-oci-iam-entra.html).
+Companion article source: [Passwordless Java connections with OCI IAM and Microsoft Entra ID](https://github.com/paulparkinson/oracledb-java-security/blob/main/java-jdbc-token-authentication-oci-iam-entra.html) (the article repository currently requires access).
+
+**Complete workload examples:** [OCI Compute instance principal and Data Science resource principal](docs/oci-workload-principals.md), including IAM policy, global schema, full Java source, JDBC/UCP commands and explicit verification boundaries.
 
 ## Prerequisites
 
@@ -16,8 +18,8 @@ Pinned and build-tested: Oracle JDBC `ojdbc17` and `ucp17` **23.26.3.0.0**, OCI 
 ## Build and configure
 
 ```bash
-git clone https://github.com/paulparkinson/oracle-jdbc-token-auth-demo.git
-cd oracle-jdbc-token-auth-demo
+git clone https://github.com/paulparkinson/oracle-db-examples.git
+cd oracle-db-examples/java/jdbc-token-auth
 mvn -B verify
 ./run.sh --help
 

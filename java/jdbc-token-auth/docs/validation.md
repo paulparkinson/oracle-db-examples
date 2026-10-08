@@ -1,5 +1,11 @@
 # Validation record
 
+## Explicit OCI workload-principal examples: October 8, 2026
+
+- `mvn -B -ntp verify`: 24 tests passed, including seven new selector, scope, URL and expected-session-identity checks for `OciWorkloadPrincipalDemo`.
+- The new standalone entry point supports `instance|resource` with `check|jdbc|ucp`. It uses the pinned real provider dependencies and no default/API-key fallback.
+- The two deployment recipes are complete but **not yet live-validated on Compute or Data Science**. Offline `check` is not cloud authentication. The previous API-key/operator results below do not validate these workload principals; renewal also remains untested for them.
+
 ## Entra and simplified configuration: October 6, 2026
 
 - Local Maven verification passes on Oracle GraalVM JDK 21, Java 17 release target. The suite now includes 17 tests, all 13 shipped profiles, EZConnect+ validation, explicit acquisition-mode conflicts, released provider discovery, and concurrent OCI PoP / Entra bearer token caches. Unit tokens are synthetic and never sent to a database.

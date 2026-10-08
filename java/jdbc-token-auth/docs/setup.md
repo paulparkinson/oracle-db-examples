@@ -6,6 +6,8 @@ OCI IAM and Entra are alternative external identity provider configurations. Use
 
 ## OCI IAM
 
+For complete Compute instance-principal and Data Science resource-principal deployment recipes, including a full Java program, use [OCI workload principals](oci-workload-principals.md).
+
 1. Create or select an IAM user and group, for example TokenDemoUsers; add the user to that group. For non-default identity domains use the domain-qualified names supported by your tenancy.
 2. Create a policy scoped to the target database. Replace each placeholder in this example:
 

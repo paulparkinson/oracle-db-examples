@@ -76,7 +76,7 @@ public record Settings(String url, String mode, Properties jdbc, Properties app)
         return new Settings(url, mode, jdbc, values);
     }
 
-    private static void validateUrl(String url) {
+    static void validateUrl(String url) {
         String[] parts = url.split("\\?", -1);
         if (parts.length > 2 || !parts[0].matches("jdbc:oracle:thin:@tcps://[A-Za-z0-9.-]+:[0-9]+/[A-Za-z0-9_.-]+"))
             throw new IllegalArgumentException("Use EZConnect+: jdbc:oracle:thin:@tcps://host:port/service (no credentials, aliases, or descriptors)");
