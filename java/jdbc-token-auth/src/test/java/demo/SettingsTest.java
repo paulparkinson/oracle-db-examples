@@ -50,7 +50,10 @@ class SettingsTest {
                 Map.entry("ENTRA_DB_APP_ID_URI", "https://example.invalid/db"),
                 Map.entry("AZURE_TENANT_ID", "tenant"), Map.entry("AZURE_CLIENT_ID", "client"));
         try (var files = Files.list(Path.of("config"))) {
-            for (Path file : files.filter(f -> f.toString().endsWith(".properties") && !f.toString().endsWith(".local.properties")).toList()) {
+            // Native JDBC files intentionally contain no application-specific app.* keys.
+            for (Path file : files.filter(f -> f.toString().endsWith(".properties")
+                    && !f.toString().endsWith(".local.properties")
+                    && !f.getFileName().toString().startsWith("native-")).toList()) {
                 var s = Settings.load(file, env);
                 assertFalse(s.jdbc().containsKey("app.url"), file.toString());
             }

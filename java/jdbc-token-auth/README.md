@@ -1,8 +1,27 @@
-# Oracle JDBC token authentication demo
+# Passwordless Java Connections to Oracle AI Database with OCI IAM and Microsoft Entra ID
 
 Runnable Java examples for Autonomous AI Database with OCI IAM and Microsoft Entra ID: OCI/Entra token files, OCI SDK proof-of-possession tokens, Entra SDK bearer tokens, JDBC resource providers, and a concurrent Universal Connection Pool (UCP). No database password is passed by the demo. Each successful connection executes a read-only identity query; no application tables are required.
 
-Companion article source: [Passwordless Java connections with OCI IAM and Microsoft Entra ID](https://github.com/paulparkinson/oracledb-java-security/blob/main/java-jdbc-token-authentication-oci-iam-entra.html) (the article repository currently requires access).
+## Native JDBC properties-file alternative
+
+`Settings` implements the existing demo's `app.*` keys and environment expansion. This does **not** mean JDBC lacks interpolation: [`oracle.jdbc.configFile`](https://docs.oracle.com/en/database/oracle/oracle-database/26/jajdb/oracle/jdbc/OracleConnection.html#CONNECTION_PROPERTY_CONFIG_FILE) lets the driver read JDBC properties and expand `${NAME}` on each physical connection. System properties take precedence over environment variables; unresolved names fail. Passing a Java `Properties` object directly to a data source does not itself perform this expansion.
+
+After `mvn -B verify`, use the separate native example (no `Settings.load`, no `app.*` properties):
+
+```bash
+export ADB_JDBC_URL='jdbc:oracle:thin:@tcps://<adb-host>:1522/<service>'
+export OCI_COMPARTMENT_ID='<compartment-ocid>'
+export OCI_DATABASE_ID='<database-ocid>'
+# Run on an authorized OCI Compute instance with the database IAM mapping configured.
+java -cp 'target/classes:target/lib/*' demo.NativeConfigFileDemo config/native-oci-instance.properties
+# Or run in an authorized Azure managed-identity environment:
+export AZURE_DATABASE_APP_URI='<database-application-id-uri>'
+java -cp 'target/classes:target/lib/*' demo.NativeConfigFileDemo config/native-entra-managed.properties
+```
+
+Use only trusted configuration files. For mTLS, add the required wallet properties in an ignored local copy; never commit wallets or secrets. The example uses TCPS EZConnect+, retains TLS verification, opens one connection and runs only an identity query. The native-file wiring is unit-tested; these new entry-point commands are not claimed as live cloud login tests. Existing provider and workload examples below remain available.
+
+Companion article: [Passwordless Java Connections to Oracle AI Database with OCI IAM and Microsoft Entra ID](https://paulparkinson.github.io/oracledb-java-security/java-jdbc-token-authentication-oci-iam-entra.html).
 
 **Complete workload examples:** [OCI Compute instance principal and Data Science resource principal](docs/oci-workload-principals.md), including IAM policy, global schema, full Java source, JDBC/UCP commands and explicit verification boundaries.
 
